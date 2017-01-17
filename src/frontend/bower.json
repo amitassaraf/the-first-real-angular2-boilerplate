@@ -1,0 +1,13 @@
+{
+  "name": "ng2flask",
+  "authors": [
+    "Amit Assaraf <soit48@gmail.com>"
+  ],
+  "description": "{{cookiecutter.project_description}}",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "dependencies": {
+    "flexbox": "*"
+  }
+}

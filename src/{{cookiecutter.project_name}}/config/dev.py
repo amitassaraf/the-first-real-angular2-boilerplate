@@ -1,0 +1,2 @@
+BIND_PORT = 8000
+DEBUG = True

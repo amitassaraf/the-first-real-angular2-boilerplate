@@ -1,0 +1,26 @@
+#!/bin/sh
+
+NAME="{{cookiecutter.project_name}}"
+FLASKDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+SOCKFILE=$FLASKDIR/run/gunicorn.sock
+USER=root
+NUM_WORKERS=10
+FLASK_WSGI_MODULE=wsgi
+WORK_DIR=$FLASKDIR/../
+FRONTEND_DIR=$FLASKDIR/frontend
+PYTHONPATH=/usr/bin/python
+
+cd $FLASKDIR
+export PYTHONPATH=$FLASKDIR:$PYTHONPATH
+
+RUNDIR=$(dirname $SOCKFILE)
+test -d $RUNDIR || mkdir -p $RUNDIR
+
+exec gunicorn $(FLASK_WSGI_MODULE):app \
+    --name $NAME \
+    --workers $NUM_WORKERS \
+    --user=$USER \
+    --bind=0.0.0.0:8080 \
+    --log-level=debug \
+    --log-file=-
+    --error-logfile=gunicorn_errors.log

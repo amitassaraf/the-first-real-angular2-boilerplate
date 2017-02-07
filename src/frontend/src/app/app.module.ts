@@ -1,29 +1,31 @@
-import {
-  NgModule,
-  ApplicationRef
-} from '@angular/core';
+import { NgModule, ApplicationRef } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { HttpModule } from '@angular/http';
+import { FormsModule } from '@angular/forms';
 
-/*
- * Platform and Environment providers/directives/pipes
- */
-import { ENV_PROVIDERS } from './environment';
+import { AppComponent } from './app.component';
+import { HomeComponent } from './home/home.component';
+import { AboutComponent } from './about/about.component';
+import { ApiService } from './services';
+import { routing } from './app.routing';
 
-import '../styles/styles.scss';
-import '../styles/headings.css';
-
-/**
- * `AppModule` is the main entry point into Angular2's bootstraping process
- */
 @NgModule({
-
-  providers: [ // expose our Services and Providers into Angular's dependency injection
-    ENV_PROVIDERS
-  ]
+  imports: [
+    BrowserModule,
+    HttpModule,
+    FormsModule,
+    routing
+  ],
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    AboutComponent
+  ],
+  providers: [
+    ApiService
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule {
-
-  constructor(
-  ) {}
-
-
+  constructor(public appRef: ApplicationRef) {}
 }

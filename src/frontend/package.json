@@ -13,7 +13,8 @@
     "webdriver-start": "webdriver-manager start",
     "lint": "tslint --force \"src/**/*.ts\"",
     "docs": "typedoc --options typedoc.json src/app/app.component.ts",
-    "start": "rimraf dist && npm run server",
+    "dev": "rimraf dist && npm run server",
+    "start": "rimraf dist && webpack --watch --progress --profile",
     "postinstall": "npm run webdriver-update"
   },
   "dependencies": {

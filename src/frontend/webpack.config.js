@@ -51,10 +51,10 @@ module.exports = function makeWebpackConfig() {
    * Reference: http://webpack.github.io/docs/configuration.html#output
    */
   config.output = {
-    path: root('dist'),
-    publicPath: isProd ? '/' : 'http://localhost:8080/',
-    filename: isProd ? 'js/[name].[hash].js' : 'js/[name].js',
-    chunkFilename: isProd ? '[id].[hash].chunk.js' : '[id].chunk.js'
+    path: root('static', 'dist'),
+    publicPath: '/static/dist',
+    filename: 'js/[name].[hash].js',
+    chunkFilename: '[id].[hash].chunk.js'
   };
 
   /**
@@ -195,14 +195,14 @@ module.exports = function makeWebpackConfig() {
     // Inject script and link tags into html files
     // Reference: https://github.com/ampedandwired/html-webpack-plugin
     new HtmlWebpackPlugin({
-      template: './src/static/index.html',
+      template: './static/index.html',
       chunksSortMode: 'dependency'
     }),
 
     // Extract css files
     // Reference: https://github.com/webpack/extract-text-webpack-plugin
     // Disabled when in test mode or not in build mode
-    new ExtractTextPlugin({filename: 'css/[name].[hash].css', disable: !isProd})
+    new ExtractTextPlugin({filename: 'css/[name].[hash].css'})
   );
 
   // Add build specific plugins

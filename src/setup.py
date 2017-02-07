@@ -1,13 +1,13 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='{{cookiecutter.project_name}}',
+    name='ng2flask',
     version='1.0.0',
     url='http://github.com/pallets/flask/',
     license='BSD',
-    author='{{cookiecutter.author}}',
-    author_email='{{cookiecutter.author_email}}',
-    description='{{cookiecutter.project_description}}',
+    author='Ramos',
+    author_email='ramos@ramos.com',
+    description='Hey',
     long_description=__doc__,
     packages=find_packages(),
     include_package_data=True,

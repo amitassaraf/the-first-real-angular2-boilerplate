@@ -3,11 +3,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 
-import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
-import { AboutComponent } from './about/about.component';
+import { AppComponent } from './components/app';
+import { HomeComponent } from './components/home/home';
+import { AboutComponent } from './components/about/about';
 import { ApiService } from './services';
-import { routing } from './app.routing';
+import { routing } from './routing';
 
 @NgModule({
   imports: [

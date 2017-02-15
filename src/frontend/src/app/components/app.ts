@@ -2,12 +2,10 @@ import { Component } from '@angular/core';
 
 import { ApiService } from '../services';
 
-import '../style/index.scss';
-
 @Component({
   selector: 'my-app', // <my-app></my-app>
   templateUrl: 'app.pug',
-  styleUrls: ['app.scss'],
+  styleUrls: ['app.scss', '../../../libs/materialize/sass/materialize.scss', '../style/index.scss'],
 })
 export class AppComponent {
   url = 'https://github.com/preboot/angular2-webpack';

@@ -90,6 +90,13 @@ module.exports = function makeWebpackConfig() {
                 exclude: root('dist')
             },
 
+            // copy those assets to output
+            {
+                test: /\.(png|jpe?g|gif|svg|ico)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+                loader: 'file-loader?name=fonts/[name].[hash].[ext]?',
+                exclude: root('dist')
+            },
+
             // Support for *.json files.
             {test: /\.json$/, exclude: root('dist'), loader: 'json-loader'},
 

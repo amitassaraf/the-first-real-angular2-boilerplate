@@ -14,7 +14,7 @@ var CopyWebpackPlugin = require('copy-webpack-plugin');
  * Get npm lifecycle event to identify the environment
  */
 var ENV = process.env.npm_lifecycle_event;
-var isProd = true;
+var isProd = false;
 
 module.exports = function makeWebpackConfig() {
     /**

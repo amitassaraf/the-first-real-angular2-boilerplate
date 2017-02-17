@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+let Materialize = require('../../../../libs/materialize/js/bin/materialize');
 
 @Component({
   selector: 'my-home',

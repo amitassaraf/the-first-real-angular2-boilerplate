@@ -43,7 +43,7 @@ module.exports = function makeWebpackConfig() {
     config.entry = {
         'polyfills': './src/polyfills.ts',
         'vendor': './src/vendor.ts',
-        'app': './src/boot.ts' // our angular app
+        'app': './src/entry.ts' // our angular app
     };
 
     /**
@@ -86,7 +86,7 @@ module.exports = function makeWebpackConfig() {
             // copy those assets to output
             {
                 test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                loader: 'file-loader?name=fonts/[name].[hash].[ext]?',
+                loader: 'file-loader?name=/fonts/[name].[hash].[ext]?',
                 exclude: root('dist')
             },
 
@@ -112,7 +112,7 @@ module.exports = function makeWebpackConfig() {
             // all css in src/style will be bundled in an external css file
             {
                 test: /\.(scss|sass)$/,
-                exclude: [root('src', 'app', 'components'), root('dist'), root('lib')],
+                exclude: [root('src', 'app', 'components'), root('dist')],
                 loader: ExtractTextPlugin.extract({
                     fallbackLoader: 'style-loader',
                     loader: ['css-loader', 'postcss-loader', 'sass-loader']

@@ -1,5 +1,6 @@
 // Helper: root() is defined at the bottom
 var path = require('path');
+var fs = require('fs');
 var webpack = require('webpack');
 
 // Webpack Plugins
@@ -8,13 +9,15 @@ var autoprefixer = require('autoprefixer');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
+var HtmlWebpackIncludeAssetsPlugin = require('html-webpack-include-assets-plugin');
+
 
 /**
  * Env
  * Get npm lifecycle event to identify the environment
  */
 var ENV = process.env.npm_lifecycle_event;
-var isProd = false;
+var isProd = true;
 
 module.exports = function makeWebpackConfig() {
     /**
@@ -43,7 +46,8 @@ module.exports = function makeWebpackConfig() {
     config.entry = {
         'polyfills': './src/polyfills.ts',
         'vendor': './src/vendor.ts',
-        'app': './src/entry.ts' // our angular app
+        'app': './src/entry.ts'
+        // our angular app
     };
 
     /**
@@ -128,7 +132,7 @@ module.exports = function makeWebpackConfig() {
             // all css required in src/app files will be merged in js files
             {
                 test: /\.(scss|sass)$/,
-                exclude: [root('src', 'app', 'style'), root('dist'), root('lib')],
+                exclude: [root('src', 'app', 'style'), root('dist'), root('externals')],
                 loader: 'raw-loader!postcss-loader!sass-loader'
             },
 
@@ -215,8 +219,14 @@ module.exports = function makeWebpackConfig() {
         // Inject script and link tags into html files
         // Reference: https://github.com/ampedandwired/html-webpack-plugin
         new HtmlWebpackPlugin({
-            template: './static/index.html',
+            template: './externals/index.html',
             chunksSortMode: 'dependency'
+        }),
+        new HtmlWebpackIncludeAssetsPlugin({
+            assets: getFiles(root('externals/libs'), ['.js', '.css'], root('externals/libs')),
+            //assets: ['jquery/dist/jquery.min.js', 'materialize/materialize.js'],
+            publicPath: '/static/libs',
+            append: true
         }),
 
         // Extract css files
@@ -243,22 +253,13 @@ module.exports = function makeWebpackConfig() {
             // Copy assets from the public folder
             // Reference: https://github.com/kevlened/copy-webpack-plugin
             new CopyWebpackPlugin([{
-                from: root('static')
+                from: root('externals'),
+                ignore: [
+                    '*.pug', '*.jade', '*.sass', '*.scss', '*.ts', '*.ttf', '*.eot', '*.woff', '*.woff2'
+                ]
             }])
         );
     }
-
-    /**
-     * Dev server configuration
-     * Reference: http://webpack.github.io/docs/configuration.html#devserver
-     * Reference: http://webpack.github.io/docs/webpack-dev-server.html
-     */
-    config.devServer = {
-        contentBase: './dist',
-        historyApiFallback: true,
-        quiet: true,
-        stats: 'minimal' // none (or false), errors-only, minimal, normal (or true) and verbose
-    };
 
     return config;
 }();
@@ -268,3 +269,24 @@ function root(args) {
     args = Array.prototype.slice.call(arguments, 0);
     return path.join.apply(path, [__dirname].concat(args));
 }
+
+function getFiles(dir, accepted_extensions, root_dir, files_) {
+    files_ = files_ || [];
+    var files = fs.readdirSync(dir);
+    for (var i in files){
+        var name = dir + '/' + files[i];
+        if (fs.statSync(name).isDirectory()){
+            getFiles(name, accepted_extensions, root_dir, files_);
+        } else {
+            for (var j = 0; j < accepted_extensions.length; j++) {
+                if (name.endsWith(accepted_extensions[j])) {
+                    files_.push(name.replace(root_dir, ''));
+                }
+            }
+        }
+    }
+    return files_;
+}
+
+// Show bundled libs
+console.log('\x1b[32m%s\x1b[36m%s\x1b[0m', '\n\nBundling libraries: ', getFiles(root('externals/libs'), ['.js', '.css'], root('externals/libs')) + '\n\n');

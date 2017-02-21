@@ -1,13 +1,15 @@
-header
-  nav
-    a([routerLink]="['']") Home
-    a([routerLink]="['about']") About
-main
-  h1 Hello from {{title}}!
+.card.m3
+    div
+        nav.p1
+            a.h2.m1([routerLink]="['']") Home
+            a.h2.m1([routerLink]="['about']") About
+            main
+        .center
+            h5 Welcome to {{title}}!
 
-  // Images (and assets) are parsed and loaded from within the public directory
-  img(src="/static/img/angular.png")
+            // Images (and assets) are parsed and loaded from within the public directory
+            img#logo(src="/static/img/angular.png")
 
-  router-outlet
-footer
-  a([href]="url") Webpack Angular 2 Starter
+            router-outlet
+    footer.p2
+        a([href]="url") The First Real Angular 2 Boilerplate

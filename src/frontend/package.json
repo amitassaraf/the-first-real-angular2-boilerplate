@@ -26,12 +26,16 @@
     "@angular/platform-browser": "2.4.2",
     "@angular/platform-browser-dynamic": "2.4.2",
     "@angular/router": "3.4.2",
+    "basscss": "^8.0.2",
     "core-js": "^2.4.1",
+    "html-webpack-include-assets-plugin": "0.0.4",
+    "jquery": "^3.1.1",
     "pug": "^2.0.0-beta11",
     "pug-html-loader": "^1.1.0",
     "pug-loader": "^2.3.0",
     "reflect-metadata": "^0.1.3",
     "rxjs": "5.0.1",
+    "systemjs": "^0.20.9",
     "zone.js": "^0.7.2"
   },
   "devDependencies": {

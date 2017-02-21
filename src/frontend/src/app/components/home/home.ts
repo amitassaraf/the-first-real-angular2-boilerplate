@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-let Materialize = require('../../../../libs/materialize/js/bin/materialize');
+import '../../../libs';
 
 @Component({
   selector: 'my-home',
@@ -13,7 +13,6 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('Hello Home');
   }
 
 }

@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
-
 import { ApiService } from '../services';
 
-// Include external libraries here
+// Include external styles here
 import '../style/index.scss';
-import '../../../libs/materialize/sass/materialize.scss';
 
 @Component({
   selector: 'my-app', // <my-app></my-app>

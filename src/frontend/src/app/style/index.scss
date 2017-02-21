@@ -1,8 +1,29 @@
 // styles in src/style directory are applied to the whole page
 body {
-    background: #0147A7;
-    color: #fff;
+  background: #f4f4f4;
+  color: #000;
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
 }
+
 a {
-    color: #03A9F4;
+  color: #03A9F4;
 }
+
+
+///////// Materialize \\\\\\\\\
+
+$roboto-font-path: "../../../externals/libs/materialize/fonts/roboto/"; // To be able to override the color we need
+@import "../../../externals/libs/materialize/sass/components/color"; // to first import the colors and fonts
+
+// Override the colors
+
+$primary-color: color("blue", "darken-2");
+$primary-color-light: lighten($primary-color, 15%);
+$primary-color-dark: darken($primary-color, 15%);
+
+$secondary-color: color("purple", "lighten-2");
+
+// Import the rest of materialize
+
+@import "../../../externals/libs/materialize/sass/materialize";

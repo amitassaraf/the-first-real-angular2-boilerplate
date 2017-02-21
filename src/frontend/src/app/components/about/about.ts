@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import '../../../libs.ts';
 
 @Component({
   selector: 'my-about',
@@ -12,7 +13,6 @@ export class AboutComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('Hello About');
   }
 
 }

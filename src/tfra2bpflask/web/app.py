@@ -1,6 +1,6 @@
 from flask import Flask
 
-from config import BIND_HOST, BIND_PORT, DEBUG, STATIC_FOLDER
+from config import DEBUG, STATIC_FOLDER
 from views.base import base_views
 
 BLUEPRINTS = [base_views]

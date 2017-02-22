@@ -16,7 +16,7 @@ export PYTHONPATH=$FLASKDIR:$PYTHONPATH
 RUNDIR=$(dirname $SOCKFILE)
 test -d $RUNDIR || mkdir -p $RUNDIR
 
-exec gunicorn $(FLASK_WSGI_MODULE):app \
+exec gunicorn $FLASK_WSGI_MODULE:app \
     --name $NAME \
     --workers $NUM_WORKERS \
     --user=$USER \

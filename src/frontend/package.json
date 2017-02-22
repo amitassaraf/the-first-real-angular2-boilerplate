@@ -1,6 +1,6 @@
 {
-  "name": "app",
-  "version": "0.0.0",
+  "name": "TheFirstRealAngular2Boilerplate",
+  "version": "1.0.0",
   "license": "MIT",
   "scripts": {
     "clean": "rimraf node_modules doc dist && npm cache clean",
@@ -25,6 +25,7 @@
     "@angular/platform-browser-dynamic": "2.4.2",
     "@angular/router": "3.4.2",
     "basscss": "^8.0.2",
+    "colors": "^1.1.2",
     "core-js": "^2.4.1",
     "html-webpack-include-assets-plugin": "0.0.4",
     "jquery": "^3.1.1",
@@ -39,9 +40,9 @@
   "devDependencies": {
     "@types/core-js": "^0.9.0",
     "@types/jasmine": "^2.2.29",
+    "@types/lodash": "4.14.50",
     "@types/node": "^6.0.38",
     "@types/selenium-webdriver": "2.53.33",
-    "@types/lodash": "4.14.50",
     "angular2-template-loader": "^0.6.0",
     "autoprefixer": "^6.3.2",
     "awesome-typescript-loader": "^3.0.0-beta.17",
@@ -69,6 +70,7 @@
     "typescript": "2.0.10",
     "url-loader": "^0.5.6",
     "webpack": "2.1.0-beta.25",
-    "webpack-dev-server": "2.1.0-beta.9"
+    "webpack-dev-server": "2.1.0-beta.9",
+    "webpack-livereload-plugin": "^0.10.0"
   }
 }

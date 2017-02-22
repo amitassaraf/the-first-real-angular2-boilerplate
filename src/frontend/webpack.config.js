@@ -10,6 +10,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 var HtmlWebpackIncludeAssetsPlugin = require('html-webpack-include-assets-plugin');
+var LiveReloadPlugin = require('webpack-livereload-plugin');
 var colors = require('colors/safe');
 
 
@@ -68,10 +69,9 @@ module.exports = function makeWebpackConfig() {
      */
     config.resolve = {
         // only discover files that have those extensions
-        extensions: ['.ts', '.js', '.json', '.css', '.scss', '.html']
+        extensions: ['.ts', '.js', '.json', '.css', '.scss', '.html'],
+        unsafeCache: !isProd // Optimizes build times
     };
-
-    var atlOptions = '';
 
     /**
      * Loaders
@@ -84,7 +84,7 @@ module.exports = function makeWebpackConfig() {
             // Support for .ts files.
             {
                 test: /\.ts$/,
-                loaders: ['awesome-typescript-loader?' + atlOptions, 'angular2-template-loader', '@angularclass/hmr-loader'],
+                loaders: ['awesome-typescript-loader?', 'angular2-template-loader', '@angularclass/hmr-loader'],
                 exclude: [/node_modules\/(?!(ng2-.+))/, root('dist')]
             },
 
@@ -240,7 +240,7 @@ module.exports = function makeWebpackConfig() {
         // Inject script and link tags into html files
         // Reference: https://github.com/ampedandwired/html-webpack-plugin
         new HtmlWebpackPlugin({
-            template: './externals/index.html',
+            template: isProd ? './externals/index.html' : './externals/index-dev.html',
             chunksSortMode: 'dependency'
         }),
         // Inject all external js and css lib files into index.html
@@ -254,8 +254,23 @@ module.exports = function makeWebpackConfig() {
         // Extract css files
         // Reference: https://github.com/webpack/extract-text-webpack-plugin
         // Disabled when in test mode or not in build mode
-        new ExtractTextPlugin({filename: 'css/[name].[hash].css'})
+        new ExtractTextPlugin({filename: 'css/[name].[hash].css'}),
+
+        // Copy assets from the public folder and ignore source files
+        // Reference: https://github.com/kevlened/copy-webpack-plugin
+        new CopyWebpackPlugin([{
+            from: root('externals'),
+            ignore: [
+                '*.pug', '*.jade', '*.sass', '*.scss', '*.ts', '*.ttf', '*.eot', '*.woff', '*.woff2', 'index-dev.html'
+            ]
+        }])
     );
+
+    if (!isProd) {
+        config.plugins.push(
+            new LiveReloadPlugin()
+        )
+    }
 
     // Add build specific plugins
     if (isProd) {
@@ -270,16 +285,7 @@ module.exports = function makeWebpackConfig() {
 
             // Reference: http://webpack.github.io/docs/list-of-plugins.html#uglifyjsplugin
             // Minify all javascript, switch loaders to minimizing mode
-            new webpack.optimize.UglifyJsPlugin({sourceMap: true, mangle: {keep_fnames: true}}),
-
-            // Copy assets from the public folder and ignore source files
-            // Reference: https://github.com/kevlened/copy-webpack-plugin
-            new CopyWebpackPlugin([{
-                from: root('externals'),
-                ignore: [
-                    '*.pug', '*.jade', '*.sass', '*.scss', '*.ts', '*.ttf', '*.eot', '*.woff', '*.woff2'
-                ]
-            }])
+            new webpack.optimize.UglifyJsPlugin({sourceMap: true, mangle: {keep_fnames: true}})
         );
     }
 
@@ -322,6 +328,6 @@ function getFiles(dir, accepted_extensions, root_dir, files_) {
 
 console.log('\n\n');
 console.log(colors.underline(colors.red('Welcome to The First Real Angular 2 Boilerplate')));
-console.log(colors.cyan('\nBundling libraries: '), colors.cyan(getFiles(root('externals/libs'), ['.js', '.css'], root('externals/libs'))));
+console.log(colors.cyan('\nBundling libraries: '), colors.green(getFiles(root('externals/libs'), ['.js', '.css'], root('externals/libs'))));
 console.log(colors.cyan('Production mode enabled: '), colors.green(isProd));
 console.log('\n\n');

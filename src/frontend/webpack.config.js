@@ -10,6 +10,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 var HtmlWebpackIncludeAssetsPlugin = require('html-webpack-include-assets-plugin');
+var colors = require('colors/safe');
 
 
 /**
@@ -17,7 +18,7 @@ var HtmlWebpackIncludeAssetsPlugin = require('html-webpack-include-assets-plugin
  * Get npm lifecycle event to identify the environment
  */
 var ENV = process.env.npm_lifecycle_event;
-var isProd = true;
+var isProd = ENV === 'build';
 
 module.exports = function makeWebpackConfig() {
     /**
@@ -87,17 +88,17 @@ module.exports = function makeWebpackConfig() {
                 exclude: [/node_modules\/(?!(ng2-.+))/, root('dist')]
             },
 
-            // copy those assets to output
+            // Copy fonts
             {
                 test: /\.(woff|woff2|ttf|eot)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                loader: 'file-loader?name=/fonts/[name].[hash].[ext]?',
+                use: 'file-loader?name=/fonts/[name].[hash].[ext]?',
                 exclude: root('dist')
             },
 
-            // copy those assets to output
+            // Copy image assets
             {
                 test: /\.(png|jpe?g|gif|svg|ico)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                loader: 'file-loader?name=fonts/[name].[hash].[ext]?',
+                use: 'file-loader?name=fonts/[name].[hash].[ext]?',
                 exclude: root('dist')
             },
 
@@ -110,23 +111,29 @@ module.exports = function makeWebpackConfig() {
             {
                 test: /\.css$/,
                 exclude: [root('src', 'app'), root('dist')],
-                loader: ExtractTextPlugin.extract({
-                    fallbackLoader: 'style-loader',
-                    loader: ['css-loader', 'postcss-loader']
+                use: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use: ['css-loader', 'postcss-loader']
                 })
             },
-            // all css required in src/app files will be merged in js files
-            {test: /\.css$/, include: root('src', 'app'), exclude: root('dist'), loader: 'raw-loader!postcss-loader'},
 
-            // support for .scss files
+            // All css required in src/app files will be merged in js files
+            {
+                test: /\.css$/,
+                include: root('src', 'app'),
+                exclude: root('dist'),
+                use: 'raw-loader!postcss-loader'
+            },
+
+            // Support for .scss files
             // use 'null' loader in test mode (https://github.com/webpack/null-loader)
             // all css in src/style will be bundled in an external css file
             {
                 test: /\.(scss|sass)$/,
                 exclude: [root('src', 'app', 'components'), root('dist')],
-                loader: ExtractTextPlugin.extract({
-                    fallbackLoader: 'style-loader',
-                    loader: ['css-loader', 'postcss-loader', 'sass-loader']
+                use: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use: ['css-loader', 'postcss-loader', 'sass-loader']
                 })
             },
             // all css required in src/app files will be merged in js files
@@ -136,13 +143,27 @@ module.exports = function makeWebpackConfig() {
                 loader: 'raw-loader!postcss-loader!sass-loader'
             },
 
-            // support for .html as raw text
-            // todo: change the loader to something that adds a hash to images
-            {test: /\.html$/, loader: 'raw-loader', exclude: root('dist')},
+            // Support for .html as raw text
+            {
+                test: /\.html$/,
+                use: 'raw-loader',
+                exclude: root('dist')
+            },
 
-            {test: /\.js$/, loader: 'raw-loader', include: root('libs'), exclude: root('dist')},
+            // Support for .js files as raw text
+            {
+                test: /\.js$/,
+                use: 'raw-loader',
+                include: root('libs'),
+                exclude: root('dist')
+            },
 
-            {test: /\.(pug|jade)$/, loader: 'pug-html-loader', exclude: root('dist')}
+            // Support for pug/jade files
+            {
+                test: /\.(pug|jade)$/,
+                use: 'pug-html-loader',
+                exclude: root('dist')
+            }
         ]
     };
 
@@ -222,6 +243,7 @@ module.exports = function makeWebpackConfig() {
             template: './externals/index.html',
             chunksSortMode: 'dependency'
         }),
+        // Inject all external js and css lib files into index.html
         new HtmlWebpackIncludeAssetsPlugin({
             assets: getFiles(root('externals/libs'), ['.js', '.css'], root('externals/libs')),
             //assets: ['jquery/dist/jquery.min.js', 'materialize/materialize.js'],
@@ -250,7 +272,7 @@ module.exports = function makeWebpackConfig() {
             // Minify all javascript, switch loaders to minimizing mode
             new webpack.optimize.UglifyJsPlugin({sourceMap: true, mangle: {keep_fnames: true}}),
 
-            // Copy assets from the public folder
+            // Copy assets from the public folder and ignore source files
             // Reference: https://github.com/kevlened/copy-webpack-plugin
             new CopyWebpackPlugin([{
                 from: root('externals'),
@@ -264,18 +286,25 @@ module.exports = function makeWebpackConfig() {
     return config;
 }();
 
-// Helper functions
+///// Helper functions \\\\\
+
+/*
+    Function to get an absolute path relative to the project root ('frontend' folder)
+ */
 function root(args) {
     args = Array.prototype.slice.call(arguments, 0);
     return path.join.apply(path, [__dirname].concat(args));
 }
 
+/*
+    Function to get all files in a certain directory that match one of the accepted_extensions
+ */
 function getFiles(dir, accepted_extensions, root_dir, files_) {
     files_ = files_ || [];
     var files = fs.readdirSync(dir);
-    for (var i in files){
+    for (var i in files) {
         var name = dir + '/' + files[i];
-        if (fs.statSync(name).isDirectory()){
+        if (fs.statSync(name).isDirectory()) {
             getFiles(name, accepted_extensions, root_dir, files_);
         } else {
             for (var j = 0; j < accepted_extensions.length; j++) {
@@ -288,5 +317,11 @@ function getFiles(dir, accepted_extensions, root_dir, files_) {
     return files_;
 }
 
-// Show bundled libs
-console.log('\x1b[32m%s\x1b[36m%s\x1b[0m', '\n\nBundling libraries: ', getFiles(root('externals/libs'), ['.js', '.css'], root('externals/libs')) + '\n\n');
+
+///// Welcome message when running webpack \\\\\\
+
+console.log('\n\n');
+console.log(colors.underline(colors.red('Welcome to The First Real Angular 2 Boilerplate')));
+console.log(colors.cyan('\nBundling libraries: '), colors.cyan(getFiles(root('externals/libs'), ['.js', '.css'], root('externals/libs'))));
+console.log(colors.cyan('Production mode enabled: '), colors.green(isProd));
+console.log('\n\n');

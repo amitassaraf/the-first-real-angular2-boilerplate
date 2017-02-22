@@ -1,18 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import '../../../libs.ts';
 
 @Component({
-  selector: 'my-about',
-  templateUrl: 'about.pug',
-  styleUrls: ['about.scss']
+    selector: 'my-about',
+    templateUrl: 'about.pug',
+    styleUrls: ['about.scss']
 })
 export class AboutComponent implements OnInit {
 
-  constructor() {
-    // Do stuff
-  }
+    constructor() {
+        // Do stuff
+    }
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+    }
 
 }

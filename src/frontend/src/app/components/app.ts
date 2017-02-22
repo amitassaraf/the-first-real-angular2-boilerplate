@@ -1,19 +1,19 @@
-import { Component } from '@angular/core';
-import { ApiService } from '../services';
+import {Component} from '@angular/core';
+import {ApiService} from '../services';
 
 // Include external styles here
 import '../style/index.scss';
 
 @Component({
-  selector: 'my-app', // <my-app></my-app>
-  templateUrl: 'app.pug',
-  styleUrls: ['app.scss'],
+    selector: 'my-app', // <my-app></my-app>
+    templateUrl: 'app.pug',
+    styleUrls: ['app.scss'],
 })
 export class AppComponent {
-  url = 'https://github.com/preboot/angular2-webpack';
-  title: string;
+    url = 'https://github.com/amitassaraf/the-first-real-angular2-boilerplate';
+    title:string;
 
-  constructor(private api: ApiService) {
-    this.title = this.api.title;
-  }
+    constructor(private api:ApiService) {
+        this.title = this.api.title;
+    }
 }

@@ -295,7 +295,7 @@ module.exports = function makeWebpackConfig() {
 ///// Helper functions \\\\\
 
 /*
-    Function to get an absolute path relative to the project root ('frontend' folder)
+ Function to get an absolute path relative to the project root ('frontend' folder)
  */
 function root(args) {
     args = Array.prototype.slice.call(arguments, 0);
@@ -303,7 +303,7 @@ function root(args) {
 }
 
 /*
-    Function to get all files in a certain directory that match one of the accepted_extensions
+ Function to get all files in a certain directory that match one of the accepted_extensions
  */
 function getFiles(dir, accepted_extensions, root_dir, files_) {
     files_ = files_ || [];

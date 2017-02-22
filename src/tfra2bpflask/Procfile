@@ -1,6 +1,6 @@
 #!/bin/sh
 
-NAME="{{cookiecutter.project_name}}"
+NAME="tfra2bpflask"
 FLASKDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 SOCKFILE=$FLASKDIR/run/gunicorn.sock
 USER=root

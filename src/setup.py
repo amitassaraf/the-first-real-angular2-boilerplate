@@ -1,13 +1,12 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='ng2flask',
+    name='tfra2bpflask',
     version='1.0.0',
-    url='http://github.com/pallets/flask/',
-    license='BSD',
-    author='Ramos',
-    author_email='ramos@ramos.com',
-    description='Hey',
+    url='https://github.com/amitassaraf/the-first-real-angular2-boilerplate',
+    license='MIT',
+    author='Amit Assaraf & Ran Amos',
+    description='A simple, complete, Angular 2 & Flask boilerplate featuring Sass, Pug, TypeScript, Webpack 2',
     long_description=__doc__,
     packages=find_packages(),
     include_package_data=True,

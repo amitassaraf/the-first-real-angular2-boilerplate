@@ -1,3 +1,11 @@
 node_modules/
 tfra2bpflask.egg-info/
+tfra2bpflask.egg-info
+*tfra2bpflask.egg-info/
+src/tfra2bpflask.egg-info
+src/tfra2bpflask.egg-info/*
+src/tfra2bpflask.egg-info/
+*src/tfra2bpflask.egg-info/
+*src/tfra2bpflask.egg-info
+*src/tfra2bpflask.egg-info/*
 dist/

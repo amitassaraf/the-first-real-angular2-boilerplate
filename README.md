@@ -28,28 +28,30 @@ Features
 Quick Start
 --
 > Clone/Download the repo
-````bash
-# clone our repo
+
+```bash
+// clone our repo
 $ git clone https://github.com/amitassaraf/the-first-real-angular2-boilerplate.git my-app
 
-# change directory to your app
+// change directory to your app
 $ cd my-app
 $ cd src/frontend
 
-# install the dependencies with npm
+// install the dependencies with npm
 $ npm install
 
-# start the server
+// start the server
 $ npm start
 
-# Enter the backend folder
+// Enter the backend folder
 $ cd ../tfra2bpflask
 
-# start the flask server
+// start the flask server
 $ sudo sh Profile
-# or (on Windows)
+// or (on Windows)
 $ python server.py
-````
+```
+
 go to http://localhost:8000 in your browser.
 
 ![When running npm start](http://i64.tinypic.com/nvnouv.png)

@@ -28,7 +28,7 @@ Features
 Quick Start
 --
 > Clone/Download the repo
-```bash
+````bash
 # clone our repo
 $ git clone https://github.com/amitassaraf/the-first-real-angular2-boilerplate.git my-app
 
@@ -49,15 +49,15 @@ $ cd ../tfra2bpflask
 $ sudo sh Profile
 # or (on Windows)
 $ python server.py
-```
+````
 go to http://localhost:8000 in your browser.
 
 ![When running npm start](http://i64.tinypic.com/nvnouv.png)
 
-```bash
+````bash
 # For production you should run:
 $ npm run build
-```
+````
 
 FAQ
 -

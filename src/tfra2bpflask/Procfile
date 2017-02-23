@@ -20,7 +20,7 @@ exec gunicorn $FLASK_WSGI_MODULE:app \
     --name $NAME \
     --workers $NUM_WORKERS \
     --user=$USER \
-    --bind=0.0.0.0:8080 \
+    --bind=0.0.0.0:8000 \
     --log-level=debug \
     --log-file=-
     --error-logfile=gunicorn_errors.log

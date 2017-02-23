@@ -15,4 +15,8 @@ export class HomeComponent implements OnInit {
     ngOnInit() {
     }
 
+    showHelloWorld() {
+        Materialize.toast('I am a toast!', 4000);
+    }
+
 }

@@ -11,9 +11,9 @@ import '../style/index.scss';
 })
 export class AppComponent {
     url = 'https://github.com/amitassaraf/the-first-real-angular2-boilerplate';
-    title:string;
+    title: string;
 
-    constructor(private api:ApiService) {
+    constructor(private api: ApiService) {
         this.title = this.api.title;
     }
 }

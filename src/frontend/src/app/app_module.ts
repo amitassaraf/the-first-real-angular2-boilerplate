@@ -27,6 +27,6 @@ import { routing } from './routing';
     bootstrap: [AppComponent]
 })
 export class AppModule {
-    constructor(public appRef:ApplicationRef) {
+    constructor(public appRef: ApplicationRef) {
     }
 }

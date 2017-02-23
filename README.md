@@ -121,3 +121,5 @@ License
 **Proudly created by Amit Assaraf & Ran Amos**
 
 ![The boilerplate main page](http://i66.tinypic.com/2z8xq0y.png)
+
+> Offline node modules -> https://tinyurl.com/z25xfa5

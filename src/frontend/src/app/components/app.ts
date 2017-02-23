@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {ApiService} from '../services';
+import { Component } from '@angular/core';
+import { ApiService } from '../services';
 
 // Include external styles here
 import '../style/index.scss';

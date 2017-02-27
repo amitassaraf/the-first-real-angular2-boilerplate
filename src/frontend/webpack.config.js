@@ -161,7 +161,7 @@ module.exports = function makeWebpackConfig() {
             // Support for pug/jade files
             {
                 test: /\.(pug|jade)$/,
-                use: 'pug-html-loader',
+                use: 'pug-ng-html',
                 exclude: root('dist')
             }
         ]

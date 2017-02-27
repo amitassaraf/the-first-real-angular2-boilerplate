@@ -26,3 +26,9 @@ $secondary-color: color("purple", "lighten-2");
 // Import the rest of materialize
 
 @import "../../../externals/libs/materialize/sass/materialize";
+
+
+///////// Font Awesome \\\\\\\\\
+
+$fa-font-path: "../../../externals/libs/font-awesome/fonts/";
+@import "../../../externals/libs/font-awesome/scss/font-awesome";

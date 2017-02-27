@@ -261,7 +261,8 @@ module.exports = function makeWebpackConfig() {
         new CopyWebpackPlugin([{
             from: root('externals'),
             ignore: [
-                '*.pug', '*.jade', '*.sass', '*.scss', '*.ts', '*.ttf', '*.eot', '*.woff', '*.woff2', 'index-dev.html'
+                '*.pug', '*.jade', '*.sass', '*.scss', '*.ts', '*.ttf', '*.eot', '*.woff', '*.woff2', 'index-dev.html',
+                '*.DS_Store'
             ]
         }])
     );
